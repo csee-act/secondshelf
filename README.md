@@ -2,6 +2,8 @@
 
 A working hackathon demo for remembering what you own, protecting sentimental belongings, and publishing unused items for sale or swap.
 
+**[Open the live demo](https://csee-act.github.io/secondshelf/)** · [Source code](https://github.com/csee-act/secondshelf) · [Deployment status](https://github.com/csee-act/secondshelf/actions/workflows/pages.yml)
+
 ## GitHub Pages demo
 
 The free Pages build runs entirely in the visitor's browser. It supports photos, inventory editing, sentimental protection, activity dates, search, suggestions, and a local Sell/Swap demonstration. It clearly labels this mode throughout the app.
