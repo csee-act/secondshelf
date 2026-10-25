@@ -1,0 +1,26 @@
+const paths={
+  shelf:'M4 7h16M4 13h16M4 19h16M6 3v4m6-4v4m6-4v4M6 9v4m6-4v4m6 2v4M6 15v4',
+  grid:'M3 3h7v7H3zM14 3h7v7h-7zM3 14h7v7H3zM14 14h7v7h-7z',
+  sparkle:'m12 3 2.8 6.2L21 12l-6.2 2.8L12 21l-2.8-6.2L3 12l6.2-2.8L12 3ZM20 2v4m-2-2h4',
+  people:'M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2m20 0v-2a4 4 0 0 0-3-3.87M9 11a4 4 0 1 0 0-8 4 4 0 0 0 0 8m8-7.87a4 4 0 0 1 0 7.75',
+  heart:'M20.8 4.6a5.5 5.5 0 0 0-7.8 0L12 5.7l-1.1-1.1a5.5 5.5 0 0 0-7.8 7.8L12 21l8.8-8.6a5.5 5.5 0 0 0 0-7.8Z',
+  plus:'M12 5v14M5 12h14',search:'m21 21-5-5M10.5 18a7.5 7.5 0 1 0 0-15 7.5 7.5 0 0 0 0 15',
+  pin:'M20 10c0 6-8 12-8 12S4 16 4 10a8 8 0 1 1 16 0ZM15 10a3 3 0 1 1-6 0 3 3 0 0 1 6 0',
+  arrow:'M5 12h14m-6-6 6 6-6 6',chevron:'m9 5 7 7-7 7',down:'m6 9 6 6 6-6',
+  clock:'M12 8v5l3 2M22 12a10 10 0 1 1-20 0 10 10 0 0 1 20 0',
+  box:'m3 7 9-4 9 4v10l-9 4-9-4V7Zm0 0 9 4 9-4M12 11v10M7.5 5l9 4',
+  leaf:'M20 3C5 1 1 10 7 17s16 1 13-14ZM4 21 16 9',
+  swap:'M3 7h17m-5-5 5 5-5 5M21 17H4m5-5-5 5 5 5',
+  tag:'M20 13 11 22 2 13V2h11l9 9-2 2ZM7 7h.01',
+  close:'m6 6 12 12M6 18 18 6',check:'m5 12 4 4L19 6',
+  camera:'M14 4h-4L8 7H3v13h18V7h-5l-2-3ZM16 13a4 4 0 1 1-8 0 4 4 0 0 1 8 0',
+  upload:'M12 16V3m-5 5 5-5 5 5M4 16v5h16v-5',
+  lock:'M5 11h14v11H5V11Zm3 0V6a4 4 0 0 1 8 0v5M12 15v3',
+  info:'M12 11v6m0-10h.01M22 12a10 10 0 1 1-20 0 10 10 0 0 1 20 0',
+  edit:'m16 3 5 5M3 21l5-1L21 7l-5-5L3 15v6Z',
+  trash:'M3 6h18M9 6V3h6v3M5 6l1 15h12l1-15M10 10v7m4-7v7',
+  calendar:'M3 5h18v16H3V5Zm0 5h18M7 2v6m10-6v6',
+  menu:'M3 6h18M3 12h18M3 18h18',shield:'m12 2 8 4v6c0 5-8 10-8 10S4 17 4 12V6l8-4Zm-4 10 3 3 5-6',
+  download:'M12 3v12m-5-5 5 5 5-5M4 17v4h16v-4',logout:'M9 3H3v18h6M10 12h11m-5-5 5 5-5 5'
+};
+export function icon(name,cls='') {return `<svg class="icon ${cls}" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.65" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="${paths[name]||paths.box}"/></svg>`;}
