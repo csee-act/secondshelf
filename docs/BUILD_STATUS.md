@@ -1,37 +1,29 @@
-# SecondShelf build status
+# SecondShelf v2 build status
 
-26 October 2026. Built against PRD revision 1.2, with the owner's follow-up instruction to build the demo first without AI or hosting accounts.
+26 October 2026. Rebuilt against the uploaded rubric after a reported 64.8 score. No category breakdown was supplied; a score increase is not guaranteed.
 
-## GitHub Pages delivery
+## Implemented
 
-The owner selected the free browser-only Pages demonstration. It is published at **https://csee-act.github.io/secondshelf/** from **https://github.com/csee-act/secondshelf**. The first deployment passed both jobs, and the HTTPS site was opened and checked in a real browser on 26 October 2026.
+| Area | Behavior |
+| --- | --- |
+| Target user | Apartment resident preparing to move within 30 days; explicit on opening screen. |
+| Photo AI | Self-hosted TensorFlow.js 4.22.0 + MobileNet V1 0.50; CPU inference, three predictions, editable approval, no key. |
+| Decision plan | Goal/deadline, Keep/Try again/Rehome, reasons, saved history, undo, future reviews and sentimental-item confirmation. |
+| Memory box | Private photo/story snapshots; retained independently of inventory; explicit removal. |
+| Listing links | Allowlisted public snapshot, bounded thumbnail, recipient view independent of sender storage; invalid-link handling. |
+| Inventory | Existing records retained; photos, edit/search, attachment, value, location, protection and separate activity dates. |
+| Rubric | In-app project brief, PRD, business hypothesis, secondary evidence context and proposed customer-validation gates. |
 
-- IndexedDB stores inventory, resized photos, profile, and local demo listings per browser and site path.
-- UI notices distinguish local listings from a shared marketplace. The server version remains available separately.
-- The Pages workflow tests the source, builds public assets, and deploys updates from `main` after Pages is configured for GitHub Actions.
-- Database files, uploads, environment files, temporary outputs, and local product documents are excluded from Git and deployment.
-- All 16 automated tests pass. The Pages preview was checked under `/secondshelf/`: photo upload, save, reload persistence, listing creation, withdrawal, original image loading, and desktop/phone layouts. Browser console checks found no warnings or errors during those flows.
-- Real AI, a shared public community, and cloud backup are not part of this Pages version. Clearing site data can remove browser records.
+## Verified
 
-| Requirement | Status | Evidence or remaining work |
-| --- | --- | --- |
-| Photo capture and editable draft | Partial | Real upload and manual editing work. Live AI adapter is implemented and mock-tested; needs a server key and a real provider check. |
-| Private inventory | Working locally | SQLite persistence; per-browser ownership; create, edit, search, and delete. |
-| Activity records | Working | Last use and last move stay separate; exact, unknown, and approximate dates supported. |
-| Owner decision | Working | Protected/high-attachment items, 180-day threshold, unknown context, and owner override covered. |
-| Listing flow | Working locally | Public preview, Sell/Swap, shared feed across sessions, duplicate prevention, snapshot isolation, and withdrawal. |
-| Live public access | Live on GitHub Pages | Browser-only demo at https://csee-act.github.io/secondshelf/. Shared server hosting remains a separate option. |
-| Trust and recovery | Working demo controls | Ownership, private photo endpoints, CSRF/origin checks, parameterized SQL, image validation/metadata stripping, input/rate limits, manual AI fallback. Anonymous sessions are not production accounts. |
-| Demo evidence | Verified locally | API/domain tests and full desktop/mobile UI flows. Screenshots under test-results. No demand interviews, human usability claims, or real AI performance claims. |
+- 23 automated tests pass: original server/API coverage plus planning, memory retention/removal, link privacy, validation, hostile text escaping and asset checksums.
+- Browser ran the real model: sample hammer classified as `hammer`, 91.9% model score, approximately 0.7 seconds displayed locally. One example, not an accuracy benchmark or human usability measurement.
+- Browser applied the draft, saved a new item, chose Rehome, saved its memory, reloaded and found the retained record/card.
+- Browser created a Swap listing and opened its link from a `127.0.0.1` sender on a `localhost` recipient. These have separate IndexedDB origins; the snapshot and thumbnail rendered without sender inventory.
+- Recipient omitted the private story and exact storage location. Desktop showed no horizontal overflow; no console warnings/errors occurred in the checked core flow.
+- Phone breakpoint verification is pending: the in-app viewport override did not change the preview's measured width. Responsive styles are included; a phone-device check is still needed.
+- Final live deployment verification will be recorded after publication.
 
-## Deliberate boundaries
+## Unvalidated
 
-No payments, live chat, transaction completion, automatic valuations, physical movement detection, or verified environmental impact. Public listings include only approved fields; private stories and storage labels never travel to the listing or image-labeling request automatically.
-
-## Before the judged live demo
-
-1. Open the published Pages URL and rehearse the two-minute walkthrough.
-2. Check it on the team's demo device and state that records and demo listings remain local to each browser.
-3. If showing the full shared/AI version later, provision persistent server storage, configure a private model key, and verify shared sessions and a real photo call separately.
-4. Add short, real user evidence gathered by the team; no interview findings have been invented.
-5. State that the implemented outcome is a published listing, not a completed exchange.
+Customer demand, repeated use, willingness to pay and completed handovers. The feed remains local; portable links are snapshots. No cloud sync, background notifications, live comparable prices, chat, payments or verified impact. The optional Node remote-AI adapter remains only mock-tested; the main UI uses actual local inference.

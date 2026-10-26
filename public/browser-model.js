@@ -30,6 +30,7 @@ function itemData(body, previous = {}) {
     lastUsed: date(body.lastUsed), lastMoved: date(body.lastMoved),
     usedApproximate: body.usedApproximate === true, movedApproximate: body.movedApproximate === true,
     estimate: amount(body.estimate), sample: previous.sample === true,
+    samplePhoto: body.samplePhoto === true || (body.samplePhoto == null && previous.samplePhoto === true),
   };
   if (!d.name) fail('Give this item a name.');
   if (!CATEGORIES.includes(d.category) || !CONDITIONS.includes(d.condition) || !Number.isInteger(d.attachment) || d.attachment < 0 || d.attachment > 5) fail('Choose a valid category, condition, and attachment level.');
@@ -100,7 +101,7 @@ export function handleShelf(shelf, path, method = 'GET', body = {}) {
       id: crypto.randomUUID(), itemId: item.id, owned: true,
       name: text(body.name, 100), description: text(body.description, 1000), condition: item.condition,
       mode: body.mode, price, swapFor: body.mode === 'swap' ? text(body.swapFor, 250) : '',
-      seller: shelf.profile.name, community: shelf.profile.community, sample: !!item.sample,
+      seller: shelf.profile.name, community: shelf.profile.community, sample: !!item.sample || item.samplePhoto === true,
       imageUrl: item.imageUrl, createdAt: new Date().toISOString(),
     };
     if (!listing.name || !listing.description) fail('Add a title and a public description.');

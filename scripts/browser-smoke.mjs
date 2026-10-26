@@ -15,7 +15,7 @@ async function flow(mobile=false) {
   const page=await context.newPage();
   page.on('pageerror',e=>failures.push(e.message));
   page.on('console',msg=>{if(msg.type()==='error')failures.push(msg.text());});
-  await page.goto(base);await page.getByRole('heading',{name:'Your inventory',exact:true}).waitFor();
+  await page.goto(base+'/#inventory');await page.getByRole('heading',{name:'Your inventory',exact:true}).waitFor();
   assert.equal(await page.locator('.item-card').count(),8);
   assert.equal(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth),true);
   await page.screenshot({path:join(out,mobile?'mobile-inventory.png':'desktop-inventory.png'),fullPage:true});

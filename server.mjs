@@ -20,7 +20,7 @@ function date(v) {
 }
 function amount(v) { if(v==null||v==='') return null;const n=Number(v);if(!Number.isFinite(n)||n<0||n>1000000) throw new HttpError(400,'Enter an amount between RM 0 and RM 1,000,000.');return Math.round(n*100)/100; }
 function validateItem(body, previous={}) {
-  const d={name:text(body.name,100),category:text(body.category,40)||'Other',location:text(body.location,120)||'Unsorted',description:text(body.description,1000),story:text(body.story,2500),condition:text(body.condition,30)||'Not checked',attachment:Number(body.attachment)||0,protected:body.protected===true,lastUsed:date(body.lastUsed),lastMoved:date(body.lastMoved),usedApproximate:body.usedApproximate===true,movedApproximate:body.movedApproximate===true,estimate:amount(body.estimate),sample:previous.sample===true};
+  const d={name:text(body.name,100),category:text(body.category,40)||'Other',location:text(body.location,120)||'Unsorted',description:text(body.description,1000),story:text(body.story,2500),condition:text(body.condition,30)||'Not checked',attachment:Number(body.attachment)||0,protected:body.protected===true,lastUsed:date(body.lastUsed),lastMoved:date(body.lastMoved),usedApproximate:body.usedApproximate===true,movedApproximate:body.movedApproximate===true,estimate:amount(body.estimate),sample:previous.sample===true,samplePhoto:body.samplePhoto===true||(body.samplePhoto==null&&previous.samplePhoto===true)};
   if(!d.name) throw new HttpError(400,'Give this item a name.');
   if(!CATEGORIES.includes(d.category)||!CONDITIONS.includes(d.condition)||!Number.isInteger(d.attachment)||d.attachment<0||d.attachment>5) throw new HttpError(400,'Choose a valid category, condition, and attachment level.');
   d.estimateAsOf=d.estimate==null?null:d.estimate===previous.estimate?previous.estimateAsOf:today();
@@ -141,7 +141,7 @@ export function createApp(options={}) {
           if(!['sell','swap'].includes(b.mode))throw new HttpError(400,'Choose Sell or Swap.');
           const price=b.mode==='sell'?amount(b.price):null;
           if(b.mode==='sell'&&price===null)throw new HttpError(400,'Set an asking price for your listing.');
-          const listing={name:text(b.name,100),description:text(b.description,1000),condition:d.condition,mode:b.mode,price,swapFor:b.mode==='swap'?text(b.swapFor,250):'',seller:s.name,community:'Taman Kita',sample:!!d.sample,asset:d.asset};
+          const listing={name:text(b.name,100),description:text(b.description,1000),condition:d.condition,mode:b.mode,price,swapFor:b.mode==='swap'?text(b.swapFor,250):'',seller:s.name,community:'Taman Kita',sample:!!d.sample||d.samplePhoto===true,asset:d.asset};
           if(!listing.name||!listing.description)throw new HttpError(400,'Add a title and a public description.');
           if(b.mode==='swap'&&!listing.swapFor)throw new HttpError(400,'Let people know what you would like to swap for.');
           const id=transaction(()=>{
@@ -177,7 +177,7 @@ export function createApp(options={}) {
       if(req.method!=='GET'&&req.method!=='HEAD')throw new HttpError(405,'Method not allowed.');
       let decoded;try{decoded=decodeURIComponent(path);}catch{throw new HttpError(400,'Invalid path.');}
       const pub=resolve(ROOT,'public'),file=resolve(pub,'.'+(decoded==='/'?'/index.html':decoded));
-      const types={'.html':'text/html; charset=utf-8','.js':'text/javascript; charset=utf-8','.css':'text/css; charset=utf-8','.svg':'image/svg+xml','.png':'image/png','.ico':'image/x-icon'};
+      const types={'.json':'application/json','.bin':'application/octet-stream','.jpg':'image/jpeg','.txt':'text/plain','.html':'text/html; charset=utf-8','.js':'text/javascript; charset=utf-8','.css':'text/css; charset=utf-8','.svg':'image/svg+xml','.png':'image/png','.ico':'image/x-icon'};
       if(!file.startsWith(pub+sep)||!types[extname(file)]||!existsSync(file))throw new HttpError(404,'Page not found.');
       const data=readFileSync(file);res.writeHead(200,{'Content-Type':types[extname(file)],'Cache-Control':'no-cache'});res.end(req.method==='HEAD'?undefined:data);
     } catch(e) {

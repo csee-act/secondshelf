@@ -1,0 +1,295 @@
+{
+  "appName": "SecondShelf",
+  "baseUrl": "https://csee-act.github.io/secondshelf/",
+  "auth": {
+    "required": false,
+    "loginPath": "",
+    "username": "",
+    "password": "",
+    "usernameSelector": "",
+    "passwordSelector": "",
+    "submitSelector": "",
+    "successUrlPattern": "",
+    "successText": []
+  },
+  "globalRules": {
+    "maxStepTimeSeconds": 45,
+    "waitForNetworkIdle": false,
+    "notes": [
+      "Use one fresh browser profile for these workflows. Do not clear any existing user profile. All created records are explicitly fictional test data.",
+      "Preserve /secondshelf/ in every navigation. No login or API key is needed. The UI runs real MobileNet inference locally; first recognition loads approximately 6.9 MB of same-origin assets.",
+      "The sample photo button removes the need for a file upload. Model predictions may vary; verify the result container and owner-approved workflow, not an exact confidence percentage.",
+      "Inventory, decisions and memories persist in IndexedDB. Community is local; generated links contain portable public snapshots, not live listings or reservations.",
+      "Wait for each save confirmation before navigating. Workflow 2 opens its generated public preview in the same tab."
+    ]
+  },
+  "workflows": [
+    {
+      "id": "photo-to-decision-memory",
+      "name": "Photo AI to a saved decision and private memory",
+      "purpose": "Proves real image recognition, reviewed item creation, a rehome decision, and a private memory that persists after navigation.",
+      "startPath": "/secondshelf/#plan",
+      "steps": [
+        {
+          "action": "goto",
+          "value": "/secondshelf/#plan"
+        },
+        {
+          "action": "click",
+          "selector": "[data-action=\"sample-start\"]"
+        },
+        {
+          "action": "waitForText",
+          "value": "Sample photo ready."
+        },
+        {
+          "action": "click",
+          "selector": "#analyze-button"
+        },
+        {
+          "action": "waitForText",
+          "value": "Photo recognition complete"
+        },
+        {
+          "action": "assertVisible",
+          "selector": "#ai-predictions"
+        },
+        {
+          "action": "click",
+          "selector": "[data-action=\"apply-ai\"]"
+        },
+        {
+          "action": "fill",
+          "selector": "#f-name",
+          "value": "AI Judge demo hammer"
+        },
+        {
+          "action": "fill",
+          "selector": "#f-location",
+          "value": "Hallway · verification box"
+        },
+        {
+          "action": "fill",
+          "selector": "#f-description",
+          "value": "Fictional hammer used to verify the hackathon demo."
+        },
+        {
+          "action": "click",
+          "selector": "[data-action=\"attachment\"][data-value=\"1\"]"
+        },
+        {
+          "action": "click",
+          "selector": ".extra-details summary"
+        },
+        {
+          "action": "fill",
+          "selector": "#f-lastUsed",
+          "value": "2024-01-01"
+        },
+        {
+          "action": "fill",
+          "selector": "#f-story",
+          "value": "Fictional private memory: hanging pictures in a first apartment."
+        },
+        {
+          "action": "click",
+          "selector": "#item-form button[type=\"submit\"]"
+        },
+        {
+          "action": "assertText",
+          "selector": "#next-decision",
+          "value": "AI Judge demo hammer"
+        },
+        {
+          "action": "click",
+          "selector": "#next-decision [data-action=\"choose-rehome\"]"
+        },
+        {
+          "action": "click",
+          "selector": "#decision-form button[type=\"submit\"]"
+        },
+        {
+          "action": "assertText",
+          "selector": ".decision-history",
+          "value": "AI Judge demo hammer"
+        },
+        {
+          "action": "goto",
+          "value": "/secondshelf/#memories"
+        },
+        {
+          "action": "assertText",
+          "selector": ".memory-grid",
+          "value": "AI Judge demo hammer"
+        },
+        {
+          "action": "assertText",
+          "selector": ".memory-grid",
+          "value": "Fictional private memory: hanging pictures in a first apartment."
+        }
+      ],
+      "success": {
+        "requiredUrlPattern": "https://csee-act.github.io/secondshelf/#memories",
+        "allowedUrlPatterns": [],
+        "allText": [
+          "Keep the story. Free the shelf.",
+          "AI Judge demo hammer"
+        ],
+        "anyText": [],
+        "visibleSelectors": [
+          ".memory-grid",
+          ".memory-card"
+        ]
+      }
+    },
+    {
+      "id": "public-swap-snapshot",
+      "name": "Create a swap listing and open its public snapshot",
+      "purpose": "Proves the item-to-listing workflow, public/private separation, and a portable snapshot rendered from the generated URL.",
+      "startPath": "/secondshelf/#inventory",
+      "steps": [
+        {
+          "action": "goto",
+          "value": "/secondshelf/#inventory"
+        },
+        {
+          "action": "click",
+          "selector": "button[aria-label=\"Open The little rice cooker\"]"
+        },
+        {
+          "action": "click",
+          "selector": "#modal [data-action=\"publish\"]"
+        },
+        {
+          "action": "fill",
+          "selector": "#f-name",
+          "value": "AI Judge cooker swap"
+        },
+        {
+          "action": "fill",
+          "selector": "#f-description",
+          "value": "Fictional sample listing for hackathon verification."
+        },
+        {
+          "action": "click",
+          "selector": "[data-action=\"mode\"][data-mode=\"swap\"]"
+        },
+        {
+          "action": "fill",
+          "selector": "#f-swapFor",
+          "value": "A paperback book"
+        },
+        {
+          "action": "click",
+          "selector": "#publish-form button[type=\"submit\"]"
+        },
+        {
+          "action": "click",
+          "selector": "button[aria-label=\"View AI Judge cooker swap\"]"
+        },
+        {
+          "action": "click",
+          "selector": "[data-action=\"share-listing\"]"
+        },
+        {
+          "action": "assertText",
+          "selector": "#modal",
+          "value": "Excluded: storage location, private story, attachment, owner estimate and activity history."
+        },
+        {
+          "action": "assertVisible",
+          "selector": "#share-url"
+        },
+        {
+          "action": "click",
+          "selector": "#open-shared-listing"
+        },
+        {
+          "action": "assertVisible",
+          "selector": "#shared-listing"
+        },
+        {
+          "action": "assertText",
+          "selector": "#shared-listing",
+          "value": "AI Judge cooker swap"
+        },
+        {
+          "action": "assertText",
+          "selector": "#shared-listing",
+          "value": "Looking for: A paperback book"
+        },
+        {
+          "action": "assertText",
+          "selector": "#shared-listing",
+          "value": "This is a snapshot, not a live reservation."
+        }
+      ],
+      "success": {
+        "requiredUrlPattern": "https://csee-act.github.io/secondshelf/#share=.*",
+        "allowedUrlPatterns": [],
+        "allText": [
+          "AI Judge cooker swap",
+          "Looking for: A paperback book"
+        ],
+        "anyText": [],
+        "visibleSelectors": [
+          "#shared-listing"
+        ]
+      }
+    },
+    {
+      "id": "meaningful-item-protection",
+      "name": "A sentimental item stays protected",
+      "purpose": "Proves that a long-unused, high-attachment item is retained rather than automatically pushed into rehoming.",
+      "startPath": "/secondshelf/#keeps",
+      "steps": [
+        {
+          "action": "goto",
+          "value": "/secondshelf/#keeps"
+        },
+        {
+          "action": "click",
+          "selector": "button[aria-label=\"Open Dad’s film camera\"]"
+        },
+        {
+          "action": "assertText",
+          "selector": "#modal .recommendation",
+          "value": "Some things are worth keeping"
+        },
+        {
+          "action": "assertText",
+          "selector": "#modal .recommendation",
+          "value": "You protected this item. It will stay out of suggestions to sell or swap."
+        },
+        {
+          "action": "assertVisible",
+          "selector": "#modal [aria-label=\"Attachment 5 of 5: Irreplaceable\"]"
+        },
+        {
+          "action": "assertText",
+          "selector": "#modal [data-action=\"protect\"]",
+          "value": "Remove protection"
+        }
+      ],
+      "success": {
+        "requiredUrlPattern": "https://csee-act.github.io/secondshelf/#keeps",
+        "allowedUrlPatterns": [],
+        "allText": [
+          "Dad’s film camera",
+          "Some things are worth keeping"
+        ],
+        "anyText": [],
+        "visibleSelectors": [
+          "#modal[open]",
+          "#modal [data-action=\"protect\"]"
+        ]
+      }
+    }
+  ],
+  "manualReviewTriggers": [
+    "If IndexedDB is blocked, enable site data in a fresh disposable judging profile; do not clear personal records.",
+    "If model assets fail to load or the device exceeds the step limit, report the error and retry recognition once. Do not count manual entry as proof that AI ran.",
+    "If browser data already contains similarly named verification records or modified seed items, use a new disposable profile; do not reset existing user data.",
+    "Customer validation, willingness to pay and actual handovers require evidence outside this browser demo."
+  ]
+}

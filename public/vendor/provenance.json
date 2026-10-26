@@ -1,0 +1,32 @@
+[
+  {
+    "path": "vendor/tf.min.js",
+    "source": "https://cdn.jsdelivr.net/npm/@tensorflow/tfjs@4.22.0/dist/tf.min.js",
+    "bytes": 1469843,
+    "sha256": "300dfae273d20b4046f46a06d735688f03675a807561e9bcb5f664eb2f3d2831"
+  },
+  {
+    "path": "vendor/LICENSE.txt",
+    "source": "https://raw.githubusercontent.com/tensorflow/tfjs/master/LICENSE",
+    "bytes": 11358,
+    "sha256": "cfc7749b96f63bd31c3c42b5c471bf756814053e847c10f3eb003417bc523d30"
+  },
+  {
+    "path": "vendor/imagenet-classes.js",
+    "source": "https://raw.githubusercontent.com/tensorflow/tfjs-examples/master/mobilenet/imagenet_classes.js",
+    "bytes": 32548,
+    "sha256": "c323c6fe215687740e26cf3f6a731c5c685aef60914b4094dd7bd0b91b3b9510"
+  },
+  {
+    "path": "models/weights.bin",
+    "source": "https://storage.googleapis.com/tfjs-models/tfjs/mobilenet_v1_0.50_224/",
+    "bytes": 5370144,
+    "sha256": "286de58469ed6a98ef6bb451a0b5a75b5a83ad480945100e7c4c33f11ac753d7"
+  },
+  {
+    "path": "assets/sample-item.jpg",
+    "source": "https://thumb.wikimedia.org/wikipedia/commons/thumb/8/84/Claw-hammer.jpg/960px-Claw-hammer.jpg",
+    "bytes": 36837,
+    "sha256": "aa70f38c4173ddf4f28d453c311445ae838b52c2aef9517c52986947b5bb06db"
+  }
+]

@@ -1,0 +1,4 @@
+# Preserve the exact downloaded bytes checked by the asset integrity tests.
+public/vendor/** -text
+public/models/** -text
+public/assets/*.jpg -text

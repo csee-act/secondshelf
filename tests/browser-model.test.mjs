@@ -10,7 +10,7 @@ const PHOTO = 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAw
 const draft = { name: 'Photo test', photo: PHOTO, description: 'A useful item.', category: 'Other', condition: 'Good', location: 'Private drawer', story: 'Private memory', attachment: 1, estimate: 45, lastUsed: '2024-01-01', lastMoved: '2025-01-01' };
 const add = shelf => handleShelf(shelf, '/api/items', 'POST', draft).item;
 
-test('browser shelves start independent, expose local mode, and keep AI disabled', () => {
+test('browser shelves start independent, expose local mode, and keep the remote AI endpoint disabled', () => {
   const a = initialShelf(), b = initialShelf();
   assert.notEqual(a.items[0].id, b.items[0].id);
   const state = shelfState(a);
@@ -32,6 +32,15 @@ test('photo and item data survive storage cloning; last use and movement stay se
   assert.equal(saved.items[0].lastMoved, '2025-01-01');
   handleShelf(saved, `/api/items/${item.id}`, 'PATCH', { ...saved.items[0], location: 'A third drawer', confirmMove: true, recordMove: true });
   assert.equal(saved.items[0].lastMoved, today());
+});
+
+test('sample-photo records and listings stay labeled without changing ordinary uploads', () => {
+  const shelf=initialShelf();
+  const sample=handleShelf(shelf,'/api/items','POST',{...draft,samplePhoto:true}).item;
+  const {id}=handleShelf(shelf,'/api/listings','POST',{itemId:sample.id,mode:'sell',price:10,name:'Demo photo',description:'Fictional listing.'});
+  assert.equal(shelfState(shelf).listings.find(l=>l.id===id).sample,true);
+  const ordinary=add(shelf);
+  assert.equal(ordinary.samplePhoto,false);
 });
 
 test('local listing snapshots omit private fields, survive later edits, and can be withdrawn', () => {

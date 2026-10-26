@@ -5,7 +5,7 @@ function storageError(error) {
   if (error?.name === 'QuotaExceededError') return new Error('Your browser storage is full. This change was not saved. Remove an unneeded item and try again.');
   return new Error('Browser storage is unavailable. Allow site data for this page, then reload. Your changes cannot be saved until storage is available.');
 }
-function openDatabase() {
+export function openDatabase() {
   if (connection) return connection;
   connection = new Promise((resolve, reject) => {
     if (!globalThis.indexedDB) return reject(storageError());
